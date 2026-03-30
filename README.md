@@ -48,15 +48,15 @@ You can install Postman via this website: https://www.postman.com/downloads/
     (You might want to use `cargo check` if you only need to verify your work without running the app.)
 
 ## Mandatory Checklists (Publisher)
--   [ ] Clone https://gitlab.com/ichlaffterlalu/bambangshop to a new repository.
+-   [V] Clone https://gitlab.com/ichlaffterlalu/bambangshop to a new repository.
 -   **STAGE 1: Implement models and repositories**
-    -   [ ] Commit: `Create Subscriber model struct.`
-    -   [ ] Commit: `Create Notification model struct.`
-    -   [ ] Commit: `Create Subscriber database and Subscriber repository struct skeleton.`
-    -   [ ] Commit: `Implement add function in Subscriber repository.`
-    -   [ ] Commit: `Implement list_all function in Subscriber repository.`
-    -   [ ] Commit: `Implement delete function in Subscriber repository.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
+    -   [V] Commit: `Create Subscriber model struct.`
+    -   [V] Commit: `Create Notification model struct.`
+    -   [V] Commit: `Create Subscriber database and Subscriber repository struct skeleton.`
+    -   [V] Commit: `Implement add function in Subscriber repository.`
+    -   [V] Commit: `Implement list_all function in Subscriber repository.`
+    -   [V] Commit: `Implement delete function in Subscriber repository.`
+    -   [V] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -77,7 +77,9 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
-
+1. Di kasus BambangShop, penggunaan trait atau interface tidak selalu diperlukan karena Rust sudah mendukung struct dan implementasi langsung. Karena kita hanya punya satu jenis data spesifik yang menjalankan fungsi sama (notifikasi), maka satu Model Subscriber sudah cukup tanpa perlu menambah kompleksitas interface.
+2. Penggunaan DashMap sangat disarankan karena kita membutuhkan lookup dan penghapusan data secara konstan O(1) berdasarkan url yang unik, dan menjaga thread-safety pada sistem yang berjalan secara concurrent.
+3. Kita tetap butuh struktur seperti DashMap atau implementasi thread-safe lainnya walaupun kita memakai pola Singleton. Karena Singleton hanya menjamin satu instance secara global, tetapi tidak secara otomatis mencegah terjadinya race condition oleh beberapa thread secara bersamaan.
 #### Reflection Publisher-2
 
 #### Reflection Publisher-3
