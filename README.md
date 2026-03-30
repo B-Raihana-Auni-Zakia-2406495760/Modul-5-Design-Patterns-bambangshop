@@ -65,11 +65,11 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [V] Commit: `Implement unsubscribe function in Notification controller.`
     -   [V] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 -   **STAGE 3: Implement notification mechanism**
-    -   [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
-    -   [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
-    -   [ ] Commit: `Implement publish function in Program service and Program controller.`
-    -   [ ] Commit: `Edit Product service methods to call notify after create/delete.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
+    -   [V] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
+    -   [V] Commit: `Implement notify function in Notification service to notify each Subscriber.`
+    -   [V] Commit: `Implement publish function in Program service and Program controller.`
+    -   [V] Commit: `Edit Product service methods to call notify after create/delete.`
+    -   [V] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -87,3 +87,6 @@ This is the place for you to write reflections:
 3. Ya, Postman sangat membantu karena memungkinkan pengujian API secara terpisah. Kita bisa menyimpan format request dalam bentuk collection, melakukan automasi request, serta melihat response secara langsung tanpa perlu membuat UI.
 
 #### Reflection Publisher-3
+1. Tutorial ini mengimplementasikan metode Push model, karena Publisher secara aktif mengirimkan data ke Subscriber melalui HTTP POST ketika terjadi perubahan status seperti PROMO, CREATED, atau DELETED.
+2. Kekurangan dari Pull model untuk kasus ini adalah akan terjadi polling secara terus-menerus dari Receiver ke Publisher yang menyebabkan overhead koneksi. Namun, kelebihannya Pull model memberikan kontrol pada Receiver untuk menentukan frekuensi pengambilan data. Sedangkan, Push model lebih efisien secara waktu karena bersifat real-time, tetapi Publisher bisa overload jika subscriber sangat banyak.
+3. Tanpa multi-threading, program Publisher akan terhambat karena setiap request ke Subscriber harus selesai terlebih dahulu sebelum melanjutkan ke Subscriber berikutnya. Jika Subscriber sedang lambat atau offline, performa aplikasi secara keseluruhan akan ikut menurun.
