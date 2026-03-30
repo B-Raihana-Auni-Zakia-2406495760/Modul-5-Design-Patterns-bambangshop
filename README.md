@@ -48,28 +48,28 @@ You can install Postman via this website: https://www.postman.com/downloads/
     (You might want to use `cargo check` if you only need to verify your work without running the app.)
 
 ## Mandatory Checklists (Publisher)
--   [ ] Clone https://gitlab.com/ichlaffterlalu/bambangshop to a new repository.
+-   [V] Clone https://gitlab.com/ichlaffterlalu/bambangshop to a new repository.
 -   **STAGE 1: Implement models and repositories**
-    -   [ ] Commit: `Create Subscriber model struct.`
-    -   [ ] Commit: `Create Notification model struct.`
-    -   [ ] Commit: `Create Subscriber database and Subscriber repository struct skeleton.`
-    -   [ ] Commit: `Implement add function in Subscriber repository.`
-    -   [ ] Commit: `Implement list_all function in Subscriber repository.`
-    -   [ ] Commit: `Implement delete function in Subscriber repository.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
+    -   [V] Commit: `Create Subscriber model struct.`
+    -   [V] Commit: `Create Notification model struct.`
+    -   [V] Commit: `Create Subscriber database and Subscriber repository struct skeleton.`
+    -   [V] Commit: `Implement add function in Subscriber repository.`
+    -   [V] Commit: `Implement list_all function in Subscriber repository.`
+    -   [V] Commit: `Implement delete function in Subscriber repository.`
+    -   [V] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
+    -   [V] Commit: `Create Notification service struct skeleton.`
+    -   [V] Commit: `Implement subscribe function in Notification service.`
+    -   [V] Commit: `Implement subscribe function in Notification controller.`
+    -   [V] Commit: `Implement unsubscribe function in Notification service.`
+    -   [V] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [V] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 -   **STAGE 3: Implement notification mechanism**
-    -   [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
-    -   [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
-    -   [ ] Commit: `Implement publish function in Program service and Program controller.`
-    -   [ ] Commit: `Edit Product service methods to call notify after create/delete.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
+    -   [V] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
+    -   [V] Commit: `Implement notify function in Notification service to notify each Subscriber.`
+    -   [V] Commit: `Implement publish function in Program service and Program controller.`
+    -   [V] Commit: `Edit Product service methods to call notify after create/delete.`
+    -   [V] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -77,7 +77,16 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
+1. Di kasus BambangShop, penggunaan trait atau interface tidak selalu diperlukan karena Rust sudah mendukung struct dan implementasi langsung. Karena kita hanya punya satu jenis data spesifik yang menjalankan fungsi sama (notifikasi), maka satu Model Subscriber sudah cukup tanpa perlu menambah kompleksitas interface.
+2. Penggunaan DashMap sangat disarankan karena kita membutuhkan lookup dan penghapusan data secara konstan O(1) berdasarkan url yang unik, dan menjaga thread-safety pada sistem yang berjalan secara concurrent.
+3. Kita tetap butuh struktur seperti DashMap atau implementasi thread-safe lainnya walaupun kita memakai pola Singleton. Karena Singleton hanya menjamin satu instance secara global, tetapi tidak secara otomatis mencegah terjadinya race condition oleh beberapa thread secara bersamaan.
 
 #### Reflection Publisher-2
+1. Pemisahan antara Service, Repository, dan Model dilakukan dengan mengikuti prinsip Single Responsibility Principle (SRP). Model berfokus pada representasi data, Repository menangani interaksi dengan penyimpanan data, dan Service bertanggung jawab terhadap logika bisnis. Ini membuat kode menjadi lebih terstruktur dan mudah untuk diuji.
+2. Jika semua tanggung jawab digabung ke dalam Model, maka kompleksitas kode akan meningkat drastis. Model bisa menjadi terlalu besar karena mencakup struktur data, pengelolaan memori, hingga komunikasi eksternal seperti HTTP request. Hal ini juga meningkatkan risiko error karena perubahan di satu bagian dapat memengaruhi bagian lainnya.
+3. Ya, Postman sangat membantu karena memungkinkan pengujian API secara terpisah. Kita bisa menyimpan format request dalam bentuk collection, melakukan automasi request, serta melihat response secara langsung tanpa perlu membuat UI.
 
 #### Reflection Publisher-3
+1. Tutorial ini mengimplementasikan metode Push model, karena Publisher secara aktif mengirimkan data ke Subscriber melalui HTTP POST ketika terjadi perubahan status seperti PROMO, CREATED, atau DELETED.
+2. Kekurangan dari Pull model untuk kasus ini adalah akan terjadi polling secara terus-menerus dari Receiver ke Publisher yang menyebabkan overhead koneksi. Namun, kelebihannya Pull model memberikan kontrol pada Receiver untuk menentukan frekuensi pengambilan data. Sedangkan, Push model lebih efisien secara waktu karena bersifat real-time, tetapi Publisher bisa overload jika subscriber sangat banyak.
+3. Tanpa multi-threading, program Publisher akan terhambat karena setiap request ke Subscriber harus selesai terlebih dahulu sebelum melanjutkan ke Subscriber berikutnya. Jika Subscriber sedang lambat atau offline, performa aplikasi secara keseluruhan akan ikut menurun.
