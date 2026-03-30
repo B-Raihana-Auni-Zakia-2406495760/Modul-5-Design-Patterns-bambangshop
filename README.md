@@ -58,12 +58,12 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [V] Commit: `Implement delete function in Subscriber repository.`
     -   [V] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
+    -   [V] Commit: `Create Notification service struct skeleton.`
+    -   [V] Commit: `Implement subscribe function in Notification service.`
+    -   [V] Commit: `Implement subscribe function in Notification controller.`
+    -   [V] Commit: `Implement unsubscribe function in Notification service.`
+    -   [V] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [V] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 -   **STAGE 3: Implement notification mechanism**
     -   [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
     -   [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
@@ -80,6 +80,10 @@ This is the place for you to write reflections:
 1. Di kasus BambangShop, penggunaan trait atau interface tidak selalu diperlukan karena Rust sudah mendukung struct dan implementasi langsung. Karena kita hanya punya satu jenis data spesifik yang menjalankan fungsi sama (notifikasi), maka satu Model Subscriber sudah cukup tanpa perlu menambah kompleksitas interface.
 2. Penggunaan DashMap sangat disarankan karena kita membutuhkan lookup dan penghapusan data secara konstan O(1) berdasarkan url yang unik, dan menjaga thread-safety pada sistem yang berjalan secara concurrent.
 3. Kita tetap butuh struktur seperti DashMap atau implementasi thread-safe lainnya walaupun kita memakai pola Singleton. Karena Singleton hanya menjamin satu instance secara global, tetapi tidak secara otomatis mencegah terjadinya race condition oleh beberapa thread secara bersamaan.
+
 #### Reflection Publisher-2
+1. Pemisahan antara Service, Repository, dan Model dilakukan dengan mengikuti prinsip Single Responsibility Principle (SRP). Model berfokus pada representasi data, Repository menangani interaksi dengan penyimpanan data, dan Service bertanggung jawab terhadap logika bisnis. Ini membuat kode menjadi lebih terstruktur dan mudah untuk diuji.
+2. Jika semua tanggung jawab digabung ke dalam Model, maka kompleksitas kode akan meningkat drastis. Model bisa menjadi terlalu besar karena mencakup struktur data, pengelolaan memori, hingga komunikasi eksternal seperti HTTP request. Hal ini juga meningkatkan risiko error karena perubahan di satu bagian dapat memengaruhi bagian lainnya.
+3. Ya, Postman sangat membantu karena memungkinkan pengujian API secara terpisah. Kita bisa menyimpan format request dalam bentuk collection, melakukan automasi request, serta melihat response secara langsung tanpa perlu membuat UI.
 
 #### Reflection Publisher-3
