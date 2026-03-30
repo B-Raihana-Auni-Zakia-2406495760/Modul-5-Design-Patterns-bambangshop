@@ -77,7 +77,9 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
-
+1. Di kasus BambangShop, penggunaan trait atau interface tidak selalu diperlukan karena Rust sudah mendukung struct dan implementasi langsung. Karena kita hanya punya satu jenis data spesifik yang menjalankan fungsi sama (notifikasi), maka satu Model Subscriber sudah cukup tanpa perlu menambah kompleksitas interface.
+2. Penggunaan DashMap sangat disarankan karena kita membutuhkan lookup dan penghapusan data secara konstan O(1) berdasarkan url yang unik, dan menjaga thread-safety pada sistem yang berjalan secara concurrent.
+3. Kita tetap butuh struktur seperti DashMap atau implementasi thread-safe lainnya walaupun kita memakai pola Singleton. Karena Singleton hanya menjamin satu instance secara global, tetapi tidak secara otomatis mencegah terjadinya race condition oleh beberapa thread secara bersamaan.
 #### Reflection Publisher-2
 
 #### Reflection Publisher-3
